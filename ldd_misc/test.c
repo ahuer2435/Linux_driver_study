@@ -28,16 +28,6 @@ struct _data_t{
 
 struct _data_t my_data;
 
-int test_open(struct inode *node, struct file *filp)
-{
-#if 0
-	struct _test_t *dev;
-        dev = container_of(node->i_cdev, struct _test_t, test_cdev);    //通过成员变量test_cdev的地址node->i_cdev，获取变量my_dev的地址。
-        filp->private_data = dev;                                       //将变量my_dev的地址，赋值给filp->private_data，存入文件结构中，便于后续通过文件结构获取。
-#endif
-	return 0;
-}
-
 int test_close(struct inode *node, struct file *filp)
 {
 	return 0;
@@ -102,7 +92,6 @@ ssize_t test_write(struct file *filp, const char __user *buf, size_t count, loff
 
 #define DEVICE_NAME "misc_dev"
 struct file_operations dev_fops = {
-	.open = test_open,
 	.release = test_close,
 	.write = test_write,
 	.read = test_read,
